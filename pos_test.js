@@ -31,6 +31,11 @@ describe('Point of Sale', function(){
         expect(checkout(['B', 'B', 'B', 'B', 'A','A','A','A',], prices)).toEqual(215)
       });
     });
+    describe('full order', function(){
+      it('should calculate the example order', function(){
+        expect(checkout(['B', 'A', 'B', 'P', 'B'], {A: 25, B: 40, P: 30})).toEqual(155)
+      });
+    });
   });
 
 });
