@@ -19,6 +19,18 @@ describe('Point of Sale', function(){
         expect(checkout(['B', 'A'], prices)).toEqual(65)
       });
     });
+
+    describe('discounted orders', function(){
+      it('should offer 3 for 2 on A', function(){
+        expect(checkout(['A', 'A', 'A'], prices)).toEqual(50)
+      });
+      it('should offer 3 for 100 on B', function(){
+        expect(checkout(['B', 'B', 'B'], prices)).toEqual(100)
+      });
+      it('should only offer discounts on multiples of 3', function(){
+        expect(checkout(['B', 'B', 'B', 'B', 'A','A','A','A',], prices)).toEqual(215)
+      });
+    });
   });
 
 });
