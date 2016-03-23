@@ -11,7 +11,7 @@ function checkout(items, prices) {
 
   function _calculateCost(items, prices) {
     items.forEach(function(item) {
-      item in prices ? cost += prices[item] : _notForSale(item);
+      cost += prices[item];
     });
   };
 
@@ -26,22 +26,21 @@ function checkout(items, prices) {
     if ( itemCount['A'] ) { discount = Math.floor(itemCount['A'] / 3) * 25; }
     if ( itemCount['B'] ) { discount += Math.floor(itemCount['B'] / 3) * 20; }
   };
-
-  function _notForSale(item){
-    throw item + ' is not for sale!'
-  };
-
 };
 
-function Checkout(prices){
+function Checkout(prices) {
   this.items = [];
   this.prices = prices;
-}
-
-Checkout.prototype.scan = function(itemCode){
-  this.items.push(itemCode);
 };
 
-Checkout.prototype.total = function(){
-   return checkout(this.items, this.prices);
+Checkout.prototype.scan = function(itemCode) {
+  itemCode in this.prices ? this.items.push(itemCode) : this.notForSale(itemCode);
+};
+
+Checkout.prototype.total = function() {
+  return checkout(this.items, this.prices);
+};
+
+Checkout.prototype.notForSale = function(itemCode) {
+  throw itemCode + ' is not for sale!'
 };

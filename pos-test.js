@@ -6,7 +6,7 @@ describe('Point of Sale', function(){
       A: 25,
       B: 40,
       P: 30
-    }
+    };
   });
 
   describe('Checkout function', function(){
@@ -21,7 +21,7 @@ describe('Point of Sale', function(){
     });
 
     describe('discounted orders', function(){
-      it('should offer but 2 get 1 free on item A', function(){
+      it('should offer buy 2 get 1 free on item A', function(){
         expect(checkout(['A', 'A', 'A'], prices)).toEqual(50);
       });
       it('should offer 3 for 100 on item B', function(){
@@ -35,12 +35,6 @@ describe('Point of Sale', function(){
     describe('full order', function(){
       it('should calculate the example order', function(){
         expect(checkout(['B', 'A', 'B', 'P', 'B'], prices)).toEqual(155);
-      });
-    });
-
-    describe('incorrect order', function(){
-      it('should not process unsold orders', function(){
-        expect(function(){checkout(['F'], prices)}).toThrow('F is not for sale!');
       });
     });
   });
@@ -59,6 +53,9 @@ describe('Point of Sale', function(){
         checkout.scan('P');
         checkout.scan('B');
         expect(checkout.items).toEqual(['A', 'P', 'B']);
+      });
+      it('should not add an invalid item', function(){
+        expect(function(){checkout.scan('F')}).toThrow('F is not for sale!');
       });
     });
 
