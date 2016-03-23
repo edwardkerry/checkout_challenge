@@ -1,25 +1,25 @@
-var checkout = function(items, prices){
+function checkout(items, prices) {
   var cost = 0;
   var itemCount = {};
   var discount = 0;
 
-  _calculateCost(items, prices)
+  _calculateCost(items, prices);
   _countItems(items);
   _applyDiscounts();
 
   return cost - discount;
 
-  function _calculateCost(items, prices){
-    items.forEach(function(item){
+  function _calculateCost(items, prices) {
+    items.forEach(function(item) {
       item in prices ? cost += prices[item] : _notForSale(item);
     });
   };
 
-  function _countItems(items){
+  function _countItems(items) {
     return items.reduce(function(count, item) {
       count[item] = ++count[item] || 1;
       return count;
-    },itemCount);
+    }, itemCount);
   };
 
   function _applyDiscounts(){
@@ -33,4 +33,14 @@ var checkout = function(items, prices){
 
 };
 
-// var Checkout
+function Checkout(prices){
+  this.order = {};
+}
+
+Checkout.prototype.scan = function(itemCode){
+
+};
+
+Checkout.prototype.total = function(){
+
+};

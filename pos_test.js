@@ -9,7 +9,7 @@ describe('Point of Sale', function(){
     }
   });
 
-  describe('checkout function', function(){
+  describe('Checkout function', function(){
     describe('normal orders', function(){
       it('should return a single item\'s cost', function(){
         expect(checkout(['A'], prices)).toEqual(25)
@@ -34,13 +34,34 @@ describe('Point of Sale', function(){
 
     describe('full order', function(){
       it('should calculate the example order', function(){
-        expect(checkout(['B', 'A', 'B', 'P', 'B'], {A: 25, B: 40, P: 30})).toEqual(155)
+        expect(checkout(['B', 'A', 'B', 'P', 'B'], prices)).toEqual(155)
       });
     });
 
     describe('incorrect order', function(){
       it('should not process unsold orders', function(){
         expect(function(){checkout(['F'], prices)}).toThrow('F is not for sale!');
+      });
+    });
+  });
+
+  describe('Checkout object', function(){
+
+    var checkout;
+
+    beforeEach(function(){
+      checkout = new Checkout(prices);
+    });
+
+    describe('CO', function(){
+      it('should have a scan function', function(){
+        expect(checkout.scan).toBeDefined();
+      });
+      it('should have a total function', function(){
+        expect(checkout.total).toBeDefined();
+      });
+      it('should have an order object', function(){
+        expect(checkout.order).toBeDefined();
       });
     });
   });
