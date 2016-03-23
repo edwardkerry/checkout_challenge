@@ -1,36 +1,36 @@
 var checkout = function(items, prices){
-  var totalCost = 0;
-  var discountA = 0;
-  var discountB = 0;
-  var totalDiscount = 0;
+  var cost = 0;
+  var itemCount = {};
+  var discount = 0;
 
-  items.forEach(function(item){
-    totalCost += prices[item];
-    _trackDiscounts(item);
-  });
-
+  _calculateCost(items, prices)
+  _countItems(items);
   _applyDiscounts();
 
-  return totalCost - totalDiscount;
+  return cost - discount;
 
-  function _trackDiscounts(item){
-    if(item === 'A') { discountA += 1 };
-    if(item === 'B') { discountB += 1 };
+  function _calculateCost(items, prices){
+    items.forEach(function(item){
+      item in prices ? cost += prices[item] : _notForSale(item);
+    });
+  };
+
+  function _countItems(items){
+    return items.reduce(function(count, item) {
+      count[item] = ++count[item] || 1;
+      return count;
+    },itemCount);
   };
 
   function _applyDiscounts(){
-    while(discountA > 2){
-      if(discountA % 3 == 0){
-        totalDiscount += 25;
-      };
-      discountA --;
-    }
-    while(discountB > 2){
-      if(discountB % 3 == 0){
-        totalDiscount += 20;
-      };
-      discountB --;
-    }
+    if ( itemCount['A'] ) { discount = Math.round(itemCount['A'] / 3) * 25; }
+    if ( itemCount['B'] ) { discount += Math.round(itemCount['B'] / 3) * 20; }
+  };
+
+  function _notForSale(item){
+    throw item + ' is not for sale!'
   };
 
 };
+
+// var Checkout
