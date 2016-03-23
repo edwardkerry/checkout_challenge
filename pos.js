@@ -23,8 +23,8 @@ function checkout(items, prices) {
   };
 
   function _applyDiscounts(){
-    if ( itemCount['A'] ) { discount = Math.round(itemCount['A'] / 3) * 25; }
-    if ( itemCount['B'] ) { discount += Math.round(itemCount['B'] / 3) * 20; }
+    if ( itemCount['A'] ) { discount = Math.floor(itemCount['A'] / 3) * 25; }
+    if ( itemCount['B'] ) { discount += Math.floor(itemCount['B'] / 3) * 20; }
   };
 
   function _notForSale(item){
@@ -34,13 +34,14 @@ function checkout(items, prices) {
 };
 
 function Checkout(prices){
-  this.order = {};
+  this.items = [];
+  this.prices = prices;
 }
 
 Checkout.prototype.scan = function(itemCode){
-
+  this.items.push(itemCode);
 };
 
 Checkout.prototype.total = function(){
-
+   return checkout(this.items, this.prices);
 };
